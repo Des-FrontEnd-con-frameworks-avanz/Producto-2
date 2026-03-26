@@ -1,0 +1,57 @@
+<!-- Layout principal -->
+<div class="container">
+  <div class="row g-4">
+
+    <!-- Columna izquierda: lista de jugadores -->
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-bottom d-flex align-items-center gap-2 py-3">
+          <i class="bi bi-people-fill text-primary fs-5"></i>
+          <span class="fw-semibold">Plantilla</span>
+          <span class="badge bg-primary ms-auto rounded-pill">{{ players.length }}</span>
+        </div>
+        <div class="card-body p-0">
+          <app-players (playerSelected)="handlePlayerSelection($event)"></app-players>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna derecha: detalle del jugador -->
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm h-100">
+
+        <!-- Header dinámico: título genérico sin jugador / datos del jugador con selección -->
+        <div class="card-header bg-white border-bottom py-3">
+          @if (!selectedPlayer) {
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-person-badge-fill text-primary fs-5"></i>
+              <span class="fw-semibold">Ficha del Jugador</span>
+            </div>
+          } @else {
+            <div class="d-flex align-items-center gap-3">
+              <i class="bi bi-person-badge-fill text-primary fs-5 flex-shrink-0"></i>
+              <div>
+                <div class="fw-bold lh-1">{{ selectedPlayer.nombre }} {{ selectedPlayer.apellidos }}</div>
+                <small class="text-muted">{{ selectedPlayer.descripcion }}</small>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="card-body">
+          @if (!selectedPlayer) {
+            <div class="empty-state text-center py-5 text-muted">
+              <i class="bi bi-person-bounding-box display-1 opacity-25 d-block mb-3"></i>
+              <p class="fs-5 mb-1">Ningún jugador seleccionado</p>
+              <small>Haz clic en un jugador de la lista para ver su ficha completa</small>
+            </div>
+          } @else {
+            <app-detail [player]="selectedPlayer"></app-detail>
+          }
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
