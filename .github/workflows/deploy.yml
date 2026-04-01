@@ -27,20 +27,20 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-
+          node-version: "20"
+          cache: "npm"
+      # SOLUCIÓN AL ERROR DE DEPENDENCIAS
       - name: Install dependencies
-        run: npm ci
+        run: npm install --legacy-peer-deps
 
       - name: Build Angular project
-        run: npx ng build --base-href /Producto-1/
+        run: npx ng build --base-href /Producto-2/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Angular 17+ compila en /browser
-          path: './dist/equipo-basket/browser'
+          path: "./dist/equipo-basket/browser"
 
       - name: Deploy to GitHub Pages
         id: deployment
