@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class PlayersComponent implements OnInit {
   public players: Player[] = [];
-  public selectedPlayerId: number | null = null;
+  public selectedPlayerId: number | null | undefined= null;
   public selectedCurrency: string = 'EUR';
   public filtroEdad: string = 'todas';
   public textoBusqueda: string = '';
@@ -29,7 +29,7 @@ export class PlayersComponent implements OnInit {
   }
 
   public onSelectPlayer(player: Player): void {
-    this.selectedPlayerId = player.id;
+    this.selectedPlayerId = player.id ? Number(player.id) : null;
     this.playerSelected.emit(player);
   }
 

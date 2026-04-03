@@ -28,4 +28,6 @@ export class HomePageComponent {
     this.selectedPlayer = null;
     this.isAdding = true;
   }
+
+
 }

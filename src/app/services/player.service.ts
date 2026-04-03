@@ -3,6 +3,8 @@ import { Firestore, collectionData, collection, addDoc, updateDoc, deleteDoc, do
 import { CollectionReference } from 'firebase/firestore';
 import { from, Observable } from 'rxjs';
 import {Player} from '../shared/models/player.model';
+import {Storage, ref, uploadBytes, getDownloadURL} from '@angular/fire/storage';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import {Player} from '../shared/models/player.model';
 export class PlayerService {
   private playersCollection!: CollectionReference
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private storage: Storage) {
     this.playersCollection = collection(this.firestore, 'players');
   }
 
@@ -22,6 +24,13 @@ export class PlayerService {
   async updatePlayer(id: string, data: any) {
     const playerDoc = doc(this.firestore, `players/${id}`);
     await updateDoc(playerDoc, data);
+  }
+
+  async uploadFile(file: File, path: string): Promise<String>{
+    const referencia = ref(this.storage, path+file.name);
+    await uploadBytes(referencia, file)
+    const url = await getDownloadURL(referencia)
+    return url;
   }
 
   async deletePlayer(id: string) {

@@ -6,6 +6,8 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app'; // import
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';// importacion de Firestore para usar la base de datos en la aplicación
 import { environment } from '../environments/environment'; //ruta con las credenciales de Firebase
 
+import { provideStorage, getStorage} from '@angular/fire/storage'; // importar Storage para gestión de archivos
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -13,6 +15,7 @@ export const appConfig: ApplicationConfig = {
 
     // Configuración de Firebase
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ]
 };
