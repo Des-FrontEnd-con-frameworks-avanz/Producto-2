@@ -1,36 +1,60 @@
-import { Injectable } from '@angular/core'; // 'Injectable' siempre con mayúscula
-import { Firestore, collectionData, collection, addDoc, updateDoc, deleteDoc, doc } from '@angular/fire/firestore';
-import { CollectionReference } from 'firebase/firestore';
-import { from, Observable } from 'rxjs';
-import {Player} from '../shared/models/player.model';
-import {Storage, ref, uploadBytes, getDownloadURL} from '@angular/fire/storage';
-
+import { Injectable, inject } from '@angular/core';
+import { 
+  Firestore, 
+  collection, 
+  onSnapshot,
+  doc, 
+  addDoc, 
+  updateDoc, 
+  deleteDoc,
+  getDocs
+} from '@angular/fire/firestore';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { Player } from '../shared/models/player.model';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class PlayerService {
-  private playersCollection!: CollectionReference
+  private firestore = inject(Firestore);
+  private storage = inject(Storage);
 
-  constructor(private firestore: Firestore, private storage: Storage) {
-    this.playersCollection = collection(this.firestore, 'players');
+  constructor() {}
+
+  /**
+   * Obtiene los jugadores en TIEMPO REAL usando la API nativa de Firebase.
+   */
+  getPlayers(): Observable<Player[]> {
+    return new Observable<Player[]>((observer) => {
+      const playersRef = collection(this.firestore, 'players');
+      
+      const unsubscribe = onSnapshot(playersRef, 
+        (snapshot) => {
+          const players: Player[] = [];
+          snapshot.forEach((docSnapshot) => {
+            players.push({ id: docSnapshot.id, ...docSnapshot.data() } as Player);
+          });
+          observer.next(players); 
+        }, 
+        (error) => {
+          observer.error(error); 
+        }
+      );
+
+      return () => unsubscribe();
+    });
   }
 
-  getPlayers(): Observable<any[]> {
-    return collectionData(this.playersCollection, { idField: 'id' });
-  }
-
-  async updatePlayer(id: string, data: any) {
+  async updatePlayer(id: string, data: Partial<Player>) {
     const playerDoc = doc(this.firestore, `players/${id}`);
     await updateDoc(playerDoc, data);
   }
 
-  async uploadFile(file: File, path: string): Promise<String>{
-    const referencia = ref(this.storage, path+file.name);
-    await uploadBytes(referencia, file)
-    const url = await getDownloadURL(referencia)
-    return url;
+  async uploadFile(file: File, path: string): Promise<string> {
+    const referencia = ref(this.storage, path + file.name);
+    await uploadBytes(referencia, file);
+    return await getDownloadURL(referencia);
   }
 
   async deletePlayer(id: string) {
@@ -39,14 +63,31 @@ export class PlayerService {
   }
 
   async addPlayer(player: Player) {
-    await addDoc(this.playersCollection, player);
+    const playersRef = collection(this.firestore, 'players');
+    await addDoc(playersRef, player);
   }
 
-  // Método para añadir los jugadores a Firestore
+// funcion de reseteo de base de datos
+  async resetDatabase() {
+    console.log('Limpiando la base de datos...');
+    const playersRef = collection(this.firestore, 'players');
+    
+    const snapshot = await getDocs(playersRef);
+    
+    const deletePromises = snapshot.docs.map(docSnap => 
+      deleteDoc(doc(this.firestore, `players/${docSnap.id}`))
+    );
+    await Promise.all(deletePromises);
+    
+    console.log('Base de datos vacía. Metiendo los 10 originales...');
+    
+    await this.seedDatabase();
+    console.log('✅ ¡Limpieza terminada! Solo hay 10 jugadores ahora.');
+  }
+
 
   async seedDatabase() {
-
-
+    const playersRef = collection(this.firestore, 'players');
     const playersData = [
       {
         nombre: 'Stephen',
@@ -159,9 +200,8 @@ export class PlayerService {
         videoUrl: 'https://www.dropbox.com/scl/fi/qp7vzp02d1o43v2n7lym0/Devin-Booker-Had-A-Historic-Rookie-Season-_-Top-10-Rookie-Plays.mp4?rlkey=gqc21buotqdkcecbe19ianjcw&st=pgm9prdp&dl=1',
         posterUrl: 'assets/videos/poster/booker.webp',
         descripcion: 'Escolta letal con capacidad anotadora y gran tiro exterior.'
-    },
-
-    {
+      },
+      {
         nombre: 'Ja',
         apellidos: 'Morant',
         posicion: 'Base',
@@ -189,13 +229,11 @@ export class PlayerService {
         posterUrl: 'assets/videos/poster/edwards.webp',
         descripcion: 'Joven estrella con gran capacidad atlética y anotadora.'
       }
-
     ];
-
 
     try {
       for (const player of playersData) {
-        await addDoc(this.playersCollection, player);
+        await addDoc(playersRef, player);
       }
       console.log('✅ Datos de jugadores añadidos a Firestore');
     } catch (error) {

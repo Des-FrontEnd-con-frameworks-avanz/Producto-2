@@ -5,8 +5,6 @@ import { Player } from '../../shared/models/player.model';
 import { CurrencyExchangePipe } from '@app/shared/pipes/currency-exchange.pipe';
 import { FiltroEdadPipe } from '../../pipes/filtro-edad.pipe';
 import { FilterPlayersPipe } from '@app/shared/pipes/filter-players.pipe';
-
-// IMPORTAMOS EL SERVICIO DE FIREBASE
 import { PlayerService } from '../../services/player.service';
 
 @Component({
@@ -18,9 +16,7 @@ import { PlayerService } from '../../services/player.service';
 })
 export class PlayersComponent implements OnInit {
   public players: Player[] = [];
-  
   public selectedPlayerId: string | null | undefined = null; 
-  
   public selectedCurrency: string = 'EUR';
   public filtroEdad: string = 'todas';
   public textoBusqueda: string = '';
@@ -30,15 +26,25 @@ export class PlayersComponent implements OnInit {
 
   constructor(private playerService: PlayerService) {}
 
-  ngOnInit(): void {
-    // SUSTITUIMOS LOS DATOS LOCALES POR LA SUSCRIPCIÓN A FIREBASE
+ngOnInit(): void {
+    console.log('=== Iniciando Carga de Jugadores en Tiempo Real ===');
+
+    // this.playerService.resetDatabase();
+
     this.playerService.getPlayers().subscribe({
       next: (data: any[]) => {
+        console.log('Respuesta de Firebase (Longitud):', data.length);
+        
+        if (data.length === 0) {
+          console.warn('La colección está VACÍA. Si no ves nada, ejecuta seedDatabase() una vez.');
+        } else {
+          console.log('Datos recibidos con éxito:', data);
+        }
+
         this.players = data;
-        console.log('Datos actualizados desde Firebase:', this.players);
       },
-      error: (error: any) => {
-        console.error('Error al cargar los jugadores', error);
+      error: (err) => {
+        console.error('Error de conexión con Firebase:', err);
       }
     });
   }
@@ -55,13 +61,12 @@ export class PlayersComponent implements OnInit {
 
   public eliminarJugador(id: string | number | undefined): void {
     if (!id) return; 
-
     const idString = String(id);
 
-    if (confirm('¿Estás seguro de que deseas eliminar este jugador de la base de datos?')) {
+    if (confirm('¿Estás seguro de que deseas eliminar este jugador?')) {
       this.playerService.deletePlayer(idString)
         .then(() => {
-          console.log('Jugador eliminado correctamente');
+          console.log('Jugador borrado de Firebase');
           if (this.selectedPlayerId === idString) {
             this.selectedPlayerId = null;
           }
