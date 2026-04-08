@@ -71,15 +71,10 @@ export class DetailComponent implements OnChanges{
       const editedData = {...this.editForm.value, fotoUrl: this.player.fotoUrl, videoUrl: this.player.videoUrl, posterUrl: this.player.posterUrl};
 
       if (this.selectedImage){
-        //const editedImageUrl = await this.playerService.uploadFile(this.selectedImage, 'images/')
-        const editedImageUrl = URL.createObjectURL(this.selectedImage);
-        editedData.fotoUrl = editedImageUrl;
-        console.log("Simulando subida de imagen. URL local:", editedImageUrl);
+        editedData.fotoUrl = await this.playerService.uploadFile(this.selectedImage, 'images/');
       }
       if (this.selectedVideo){
-        //const editedVideoUrl = await this.playerService.uploadFile(this.selectedVideo, 'videos/')
-        const editedVideoUrl = URL.createObjectURL(this.selectedVideo);
-        editedData.videoUrl = editedVideoUrl;
+        editedData.videoUrl = await this.playerService.uploadFile(this.selectedVideo, 'videos/');
       }
 
       await this.playerService.updatePlayer(playerId, editedData);

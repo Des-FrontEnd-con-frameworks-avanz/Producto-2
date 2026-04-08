@@ -53,7 +53,7 @@
             <small>Haz clic en un jugador de la lista para ver su ficha completa o añade uno nuevo.</small>
           </div>
           } @else if (isAdding) {
-          <app-add-player></app-add-player>
+          <app-add-player (playerAdded)="onPlayerAdded()"></app-add-player>
           } @else {
           <app-detail [player]="selectedPlayer!"></app-detail>
           }
