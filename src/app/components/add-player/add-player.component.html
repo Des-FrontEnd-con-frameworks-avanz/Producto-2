@@ -3,29 +3,31 @@
     <h3 class="mb-4 text-primary"><i class="bi bi-person-plus-fill me-2"></i>Añadir Nuevo Jugador</h3>
 
     @if (successMessage) {
-      <div class="alert alert-success d-flex align-items-center" role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i>
-        <div>
-          Jugador guardado correctamente
-        </div>
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      <div>
+        Jugador guardado correctamente
       </div>
+    </div>
     }
 
     <form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
       <div class="row g-3 mb-3">
         <div class="col-md-6">
           <label class="form-label fw-bold">Nombre</label>
-          <input type="text" class="form-control" formControlName="nombre" [class.is-invalid]="getControlError('nombre')">
+          <input type="text" class="form-control" formControlName="nombre"
+            [class.is-invalid]="getControlError('nombre')">
           @if (getControlError('nombre')) {
-            <div class="invalid-feedback">El nombre es obligatorio.</div>
+          <div class="invalid-feedback">El nombre es obligatorio.</div>
           }
         </div>
 
         <div class="col-md-6">
           <label class="form-label fw-bold">Apellidos</label>
-          <input type="text" class="form-control" formControlName="apellidos" [class.is-invalid]="getControlError('apellidos')">
+          <input type="text" class="form-control" formControlName="apellidos"
+            [class.is-invalid]="getControlError('apellidos')">
           @if (getControlError('apellidos')) {
-            <div class="invalid-feedback">Los apellidos son obligatorios.</div>
+          <div class="invalid-feedback">Los apellidos son obligatorios.</div>
           }
         </div>
 
@@ -40,7 +42,7 @@
             <option value="Pívot">Pívot</option>
           </select>
           @if (getControlError('posicion')) {
-            <div class="invalid-feedback">La posición es obligatoria.</div>
+          <div class="invalid-feedback">La posición es obligatoria.</div>
           }
         </div>
 
@@ -48,39 +50,43 @@
           <label class="form-label fw-bold">Edad</label>
           <input type="number" class="form-control" formControlName="edad" [class.is-invalid]="getControlError('edad')">
           @if (getControlError('edad')) {
-            <div class="invalid-feedback">Edad no válida.</div>
+          <div class="invalid-feedback">Edad no válida.</div>
           }
         </div>
 
         <div class="col-md-3">
           <label class="form-label fw-bold">Precio ($)</label>
-          <input type="number" class="form-control" formControlName="precio" [class.is-invalid]="getControlError('precio')">
+          <input type="number" class="form-control" formControlName="precio"
+            [class.is-invalid]="getControlError('precio')">
           @if (getControlError('precio')) {
-            <div class="invalid-feedback">El precio es obligatorio.</div>
+          <div class="invalid-feedback">El precio es obligatorio.</div>
           }
         </div>
 
         <div class="col-md-4">
           <label class="form-label fw-bold">Altura</label>
-          <input type="text" class="form-control" formControlName="altura" placeholder="Ej: 1.95m" [class.is-invalid]="getControlError('altura')">
+          <input type="text" class="form-control" formControlName="altura" placeholder="Ej: 1.95m"
+            [class.is-invalid]="getControlError('altura')">
           @if (getControlError('altura')) {
-            <div class="invalid-feedback">La altura es obligatoria.</div>
+          <div class="invalid-feedback">La altura es obligatoria.</div>
           }
         </div>
 
         <div class="col-md-4">
           <label class="form-label fw-bold">Peso</label>
-          <input type="text" class="form-control" formControlName="peso" placeholder="Ej: 90kg" [class.is-invalid]="getControlError('peso')">
+          <input type="text" class="form-control" formControlName="peso" placeholder="Ej: 90kg"
+            [class.is-invalid]="getControlError('peso')">
           @if (getControlError('peso')) {
-            <div class="invalid-feedback">El peso es obligatorio.</div>
+          <div class="invalid-feedback">El peso es obligatorio.</div>
           }
         </div>
 
         <div class="col-md-4">
           <label class="form-label fw-bold">Experiencia</label>
-          <input type="text" class="form-control" formControlName="experiencia" placeholder="Ej: 5 años" [class.is-invalid]="getControlError('experiencia')">
+          <input type="text" class="form-control" formControlName="experiencia" placeholder="Ej: 5 años"
+            [class.is-invalid]="getControlError('experiencia')">
           @if (getControlError('experiencia')) {
-            <div class="invalid-feedback">La experiencia es obligatoria.</div>
+          <div class="invalid-feedback">La experiencia es obligatoria.</div>
           }
         </div>
 
@@ -99,8 +105,12 @@
         </div>
 
         <div class="col-md-6 mt-4">
-          <label class="form-label fw-bold">URL del Vídeo (Link de highlights)</label>
-          <input type="text" class="form-control" formControlName="videoUrl" placeholder="https://dropbox.com/video.mp4">
+          
+          <label class="form-label fw-bold">Subir Vídeo (Highlights)</label>
+          <!-- <input type="file" class="form-control" accept="video/*" (change)="onVideoSelected($event)">-->
+          <input type="text" class="form-control" formControlName="videoUrl"
+            placeholder="Ej: https://www.dropbox.com/scl/fi/...">
+
         </div>
       </div>
 
