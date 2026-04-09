@@ -32,6 +32,7 @@ export class AddPlayerComponent {
       precio: ['', [Validators.required, Validators.min(0)]],
       descripcion: [''],
       videoUrl: ['']
+
     });
   }
 
