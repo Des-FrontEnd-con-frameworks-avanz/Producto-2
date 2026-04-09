@@ -62,7 +62,7 @@
           style="min-height: 350px; cursor: pointer;" (click)="mostrarModalVideo = true">
           <img [src]="player.posterUrl" class="w-100 h-100 position-absolute top-0 start-0"
             style="object-fit: cover; opacity: 0.8;" [alt]="'Poster de ' + player.nombre"
-            onerror="this.src='https://placehold.co/800x450?text=NBA+Highlights'">
+            onerror="this.src='/images/poster.jpg'">
           <div class="position-absolute top-50 start-50 translate-middle">
             <i class="bi bi-play-circle-fill text-white opacity-75" style="font-size: 3.5rem;"></i>
           </div>
@@ -170,8 +170,10 @@
         </div>
 
         <div class="col-md-6 mt-4">
-          <label class="form-label fw-bold">Subir Vídeo (Highlights)</label>
-          <input type="file" class="form-control" accept="video/*" (change)="onVideoSelected($event)">
+          <label class="form-label fw-bold">Subir enlace vídeo de Highlights (Dropbox)</label>
+          <!--<input type="file" class="form-control" accept="video/*" (change)="onVideoSelected($event)">-->
+          <input type="text" class="form-control" formControlName="videoUrl"
+            placeholder="Ej: https://www.dropbox.com/scl/fi/...">
         </div>
       </div>
 

@@ -51,10 +51,19 @@ export class PlayerService {
     await updateDoc(playerDoc, data);
   }
 
-  async uploadFile(file: File, path: string): Promise<string> {
+  /*async uploadFile(file: File, path: string): Promise<string> {
     const referencia = ref(this.storage, path + file.name);
     await uploadBytes(referencia, file);
     return await getDownloadURL(referencia);
+  }*/
+
+  async uploadFileString(file: File, path: string): Promise <string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    })
   }
 
   async deletePlayer(id: string) {
@@ -64,11 +73,11 @@ export class PlayerService {
 
   async addPlayer(player: Player, image?: File | null, video?: File | null) {
     if (image) {
-      player.fotoUrl = await this.uploadFile(image, 'images/');
+      player.fotoUrl = await this.uploadFileString(image, 'images/');
     }
-    if (video) {
-      player.videoUrl = await this.uploadFile(video, 'videos/');
-    }
+    /*if (video) {
+      player.videoUrl = await this.uploadFileString(video, 'videos/');
+    }*/
     const playersRef = collection(this.firestore, 'players');
     await addDoc(playersRef, player);
   }

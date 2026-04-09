@@ -24,6 +24,16 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.playerService.getPlayers().subscribe((data) => {
       this.players = data;
+
+      if(this.selectedPlayer){
+        const jugadorActualizado = this.players.find(p => p.id === this.selectedPlayer?.id)
+
+        if(jugadorActualizado){
+          this.selectedPlayer= {...jugadorActualizado}
+        }
+      }
+
+
     });
   }
 

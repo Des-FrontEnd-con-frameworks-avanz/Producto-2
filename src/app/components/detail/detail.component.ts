@@ -18,7 +18,7 @@ export class DetailComponent implements OnChanges{
   editForm: FormGroup;
   successMessage = false;
   selectedImage: File | null = null;
-  selectedVideo: File | null = null;
+  //selectedVideo: File | null = null;
 
   public isEditing: boolean = false;
 
@@ -41,7 +41,8 @@ export class DetailComponent implements OnChanges{
       peso: [''],
       experiencia: [''],
       precio: [''],
-      descripcion: ['']
+      descripcion: [''],
+      videoUrl: ['']
     })
   }
 
@@ -55,9 +56,9 @@ export class DetailComponent implements OnChanges{
     this.selectedImage = event.target.files[0];
   }
 
-  public onVideoSelected(event: any): void{
+  /*public onVideoSelected(event: any): void{
     this.selectedVideo = event.target.files[0];
-  }
+  }*/
 
   public onCancelClick(): void{
     this.isEditing = false;
@@ -68,20 +69,21 @@ export class DetailComponent implements OnChanges{
   if (this.editForm.valid && this.player?.id) {
     try {
       const playerId = String(this.player.id);
-      const editedData = {...this.editForm.value, fotoUrl: this.player.fotoUrl, videoUrl: this.player.videoUrl, posterUrl: this.player.posterUrl};
+      const editedData = {...this.editForm.value, fotoUrl: this.player.fotoUrl, /*videoUrl: this.player.videoUrl,*/ posterUrl: this.player.posterUrl || '/images/poster.jpg'};
 
       if (this.selectedImage){
-        editedData.fotoUrl = await this.playerService.uploadFile(this.selectedImage, 'images/');
+        editedData.fotoUrl = await this.playerService.uploadFileString(this.selectedImage, 'images/');
       }
-      if (this.selectedVideo){
+      /*if (this.selectedVideo){
         editedData.videoUrl = await this.playerService.uploadFile(this.selectedVideo, 'videos/');
-      }
+      }*/
 
       await this.playerService.updatePlayer(playerId, editedData);
-      this.successMessage = true;
 
+      this.player = {...this.player, ...editedData}
+      this.successMessage = true;
       this.selectedImage = null;
-      this.selectedVideo = null;
+      //this.selectedVideo = null;
       this.isEditing = false;
 
     setTimeout(() => {

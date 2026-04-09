@@ -30,7 +30,8 @@ export class AddPlayerComponent {
       peso: ['', Validators.required],
       experiencia: ['', Validators.required],
       precio: ['', [Validators.required, Validators.min(0)]],
-      descripcion: ['']
+      descripcion: [''],
+      videoUrl: ['']
     });
   }
 
@@ -41,12 +42,12 @@ export class AddPlayerComponent {
     }
   }
 
-  onVideoSelected(event: any) {
+  /*onVideoSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.selectedVideo = file;
     }
-  }
+  }*/
 
   async onSubmit() {
     if (this.playerForm.valid) {
@@ -54,12 +55,16 @@ export class AddPlayerComponent {
         const formData = this.playerForm.value;
         const newPlayer: Player = { ...formData };
 
-        await this.playerService.addPlayer(newPlayer, this.selectedImage, this.selectedVideo);
+        if (this.selectedImage) {
+          newPlayer.fotoUrl = await this.playerService.uploadFileString(this.selectedImage, 'images/');
+        }
+
+        await this.playerService.addPlayer(newPlayer, /*this.selectedImage, this.selectedVideo*/);
 
         this.successMessage = true;
         this.playerForm.reset();
         this.selectedImage = null;
-        this.selectedVideo = null;
+        //this.selectedVideo = null;
 
         const fileInputs = document.querySelectorAll('input[type="file"]') as NodeListOf<HTMLInputElement>;
         fileInputs.forEach(input => input.value = '');
