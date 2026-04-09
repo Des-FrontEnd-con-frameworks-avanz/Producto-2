@@ -30,6 +30,9 @@ export class AddPlayerComponent {
       peso: ['', Validators.required],
       experiencia: ['', Validators.required],
       precio: ['', [Validators.required, Validators.min(0)]],
+      fotoUrl: [''],
+      videoUrl: [''],
+      posterUrl: [''],
       descripcion: ['']
     });
   }
