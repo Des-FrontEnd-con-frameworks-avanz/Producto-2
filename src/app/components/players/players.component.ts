@@ -29,8 +29,6 @@ export class PlayersComponent implements OnInit {
 ngOnInit(): void {
     console.log('=== Iniciando Carga de Jugadores en Tiempo Real ===');
 
-    // this.playerService.resetDatabase();
-
     this.playerService.getPlayers().subscribe({
       next: (data: any[]) => {
         console.log('Respuesta de Firebase (Longitud):', data.length);
@@ -74,4 +72,5 @@ ngOnInit(): void {
         .catch(error => console.error('Error al eliminar:', error));
     }
   }
+  
 }
