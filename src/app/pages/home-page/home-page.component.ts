@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlayersComponent } from '@app/components/players/players.component';
 import { Player } from '@app/shared/models/player.model';
 import { DetailComponent } from '@app/components/detail/detail.component';
@@ -15,6 +15,8 @@ import { PlayerService } from '@app/services/player.service';
 })
 export class HomePageComponent implements OnInit {
 
+  @ViewChild(DetailComponent) detailComponent?: DetailComponent;
+
   public players: Player[] = [];
   public selectedPlayer: Player | null = null;
   public isAdding: boolean = false;
@@ -30,9 +32,10 @@ export class HomePageComponent implements OnInit {
 
         if(jugadorActualizado){
           this.selectedPlayer= {...jugadorActualizado}
+        }else {
+          this.selectedPlayer = null;
         }
       }
-
 
     });
   }

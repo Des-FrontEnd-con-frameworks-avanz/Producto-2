@@ -10,6 +10,11 @@
           <span class="fw-semibold">Plantilla</span>
           <span class="badge bg-primary ms-auto rounded-pill">{{ players.length }}</span>
         </div>
+        <div class="m-2 ">
+          <button class="btn btn-outline-success btn-s w-100 " (click)="onNewPlayerClick()">
+            <i class="bi bi-plus-circle"></i> Nuevo jugador
+          </button>
+        </div>
         <div class="card-body p-0">
           <app-players (playerSelected)="handlePlayerSelection($event)"></app-players>
         </div>
@@ -40,9 +45,7 @@
             </div>
           </div>
           }
-          <button class="btn btn-outline-primary btn-sm" (click)="onNewPlayerClick()">
-            <i class="bi bi-plus-circle"></i> Nuevo jugador
-          </button>
+
         </div>
 
         <div class="card-body">

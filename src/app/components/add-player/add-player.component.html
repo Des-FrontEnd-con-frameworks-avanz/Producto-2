@@ -101,21 +101,14 @@
         </div>
 
         <div class="col-md-6 mt-4">
-          <label class="form-label fw-bold">URL de la Foto de perfil (Link de imagen)</label>
-          <input type="text" class="form-control" formControlName="fotoUrl" placeholder="https://ejemplo.com/foto.jpg">
-        </div>
-        <div class="col-md-6 mt-4">
-          <label class="form-label fw-bold">URL del Poster (Link de imagen)</label>
-          <input type="text" class="form-control" formControlName="posterUrl" placeholder="https://ejemplo.com/poster.jpg">
+          <label class="form-label fw-bold">Subir Poster (Archivo local)</label>
+          <input type="file" class="form-control" accept="image/*" (change)="onPosterSelected($event)">
         </div>
 
         <div class="col-md-6 mt-4">
           <label class="form-label fw-bold">Subir enlace vídeo de Highlights (Dropbox)</label>
-
-          <!-- <input type="file" class="form-control" accept="video/*" (change)="onVideoSelected($event)">-->
           <input type="text" class="form-control" formControlName="videoUrl"
             placeholder="Ej: https://www.dropbox.com/scl/fi/...">
-
         </div>
       </div>
 
