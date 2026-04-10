@@ -71,13 +71,8 @@ export class PlayerService {
     await deleteDoc(playerDoc);
   }
 
-  async addPlayer(player: Player, image?: File | null, video?: File | null) {
-    if (image) {
-      player.fotoUrl = await this.uploadFileString(image, 'images/');
-    }
-    /*if (video) {
-      player.videoUrl = await this.uploadFileString(video, 'videos/');
-    }*/
+  async addPlayer(player: Player) {
+
     const playersRef = collection(this.firestore, 'players');
     await addDoc(playersRef, player);
   }

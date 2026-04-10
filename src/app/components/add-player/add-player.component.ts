@@ -18,7 +18,7 @@ export class AddPlayerComponent {
   @Output() playerAdded = new EventEmitter<void>();
 
   selectedImage: File | null = null;
-  selectedVideo: File | null = null;
+  selectedPoster: File | null = null;
 
   constructor(private fb: FormBuilder, private playerService: PlayerService) {
     this.playerForm = this.fb.group({
@@ -45,12 +45,12 @@ export class AddPlayerComponent {
     }
   }
 
-  /*onVideoSelected(event: any) {
+  onPosterSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.selectedVideo = file;
+      this.selectedPoster = file;
     }
-  }*/
+  }
 
   async onSubmit() {
     if (this.playerForm.valid) {
@@ -62,12 +62,18 @@ export class AddPlayerComponent {
           newPlayer.fotoUrl = await this.playerService.uploadFileString(this.selectedImage, 'images/');
         }
 
-        await this.playerService.addPlayer(newPlayer, /*this.selectedImage, this.selectedVideo*/);
+        if (this.selectedPoster){
+          newPlayer.posterUrl = await this.playerService.uploadFileString(this.selectedPoster, 'images/');
+        } else {
+          newPlayer.posterUrl = '/images/poster.jpg'
+        }
+
+        await this.playerService.addPlayer(newPlayer);
 
         this.successMessage = true;
         this.playerForm.reset();
         this.selectedImage = null;
-        //this.selectedVideo = null;
+        this.selectedPoster = null;
 
         const fileInputs = document.querySelectorAll('input[type="file"]') as NodeListOf<HTMLInputElement>;
         fileInputs.forEach(input => input.value = '');
