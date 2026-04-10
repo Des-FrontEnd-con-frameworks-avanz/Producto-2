@@ -40,9 +40,16 @@
             </div>
           </div>
           }
-          <button class="btn btn-outline-primary btn-sm" (click)="onNewPlayerClick()">
-            <i class="bi bi-plus-circle"></i> Nuevo jugador
-          </button>
+          <div class="d-flex gap-2">
+            @if (selectedPlayer && !isAdding && (!detailComponent || !detailComponent.isEditing)) {
+            <button class="btn btn-outline-primary btn-sm" (click)="detailComponent?.onEditPlayerClick()">
+              <i class="bi bi-pencil-square"></i> Editar Jugador
+            </button>
+            }
+            <button class="btn btn-outline-success btn-sm" (click)="onNewPlayerClick()">
+              <i class="bi bi-plus-circle"></i> Nuevo jugador
+            </button>
+          </div>
         </div>
 
         <div class="card-body">
