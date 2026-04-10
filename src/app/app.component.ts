@@ -9,13 +9,9 @@ import { PlayerService } from './services/player.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent  {
   title = 'equipo-basket';
 
-  constructor(private playersService: PlayerService) {
-  }
 
-  ngOnInit(): void {
-    //this.playersService.seedDatabase(); // comente esta línea después de ejecutar el método una vez para evitar duplicados en la base de datos
-  }
+
 }
