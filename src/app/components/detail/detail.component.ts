@@ -12,7 +12,7 @@ import { PlayerService } from '@app/services/player.service';
   imports: [CommonModule,MediaComponent, ReactiveFormsModule],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss'
-  
+
 })
 export class DetailComponent implements OnChanges{
   editForm: FormGroup;
@@ -42,6 +42,8 @@ export class DetailComponent implements OnChanges{
       experiencia: [''],
       precio: [''],
       descripcion: [''],
+      fotoUrl: [''],
+      posterUrl: [''],
       videoUrl: ['']
     })
   }
@@ -69,10 +71,13 @@ export class DetailComponent implements OnChanges{
   if (this.editForm.valid && this.player?.id) {
     try {
       const playerId = String(this.player.id);
-      const editedData = {...this.editForm.value, fotoUrl: this.player.fotoUrl, /*videoUrl: this.player.videoUrl,*/ posterUrl: this.player.posterUrl || '/images/poster.jpg'};
+      const editedData = {...this.editForm.value, posterUrl: this.editForm.value.posterUrl || this.player.posterUrl || '/images/poster.jpg'};
 
       if (this.selectedImage){
         editedData.fotoUrl = await this.playerService.uploadFileString(this.selectedImage, 'images/');
+      } else if (!editedData.fotoUrl && this.player.fotoUrl) {
+        // Fallback for safety if not set in form
+        editedData.fotoUrl = this.player.fotoUrl;
       }
       /*if (this.selectedVideo){
         editedData.videoUrl = await this.playerService.uploadFile(this.selectedVideo, 'videos/');

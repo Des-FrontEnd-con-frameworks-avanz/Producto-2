@@ -165,8 +165,18 @@
         </div>
 
         <div class="col-md-6 mt-4">
-          <label class="form-label fw-bold">Subir Foto (Imagen)</label>
+          <label class="form-label fw-bold">Subir Foto (Archivo local)</label>
           <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)">
+        </div>
+
+        <div class="col-md-6 mt-4">
+          <label class="form-label fw-bold">URL de la Foto de perfil (Link de imagen)</label>
+          <input type="text" class="form-control" formControlName="fotoUrl" placeholder="https://ejemplo.com/foto.jpg">
+        </div>
+
+        <div class="col-md-6 mt-4">
+          <label class="form-label fw-bold">URL del Poster (Link de imagen)</label>
+          <input type="text" class="form-control" formControlName="posterUrl" placeholder="https://ejemplo.com/poster.jpg">
         </div>
 
         <div class="col-md-6 mt-4">
