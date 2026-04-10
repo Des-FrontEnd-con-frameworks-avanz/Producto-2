@@ -18,7 +18,7 @@ export class DetailComponent implements OnChanges{
   editForm: FormGroup;
   successMessage = false;
   selectedImage: File | null = null;
-  //selectedVideo: File | null = null;
+  selectedPoster: File | null = null;
 
   public isEditing: boolean = false;
 
@@ -58,43 +58,45 @@ export class DetailComponent implements OnChanges{
     this.selectedImage = event.target.files[0];
   }
 
-  /*public onVideoSelected(event: any): void{
-    this.selectedVideo = event.target.files[0];
-  }*/
+  public onPosterSelected(event: any): void{
+    this.selectedPoster = event.target.files[0];
+  }
 
   public onCancelClick(): void{
     this.isEditing = false;
-    console.log('click cancelar', 'editando: ',this.isEditing, this.player)
   }
 
   async onSubmit() {
-  if (this.editForm.valid && this.player?.id) {
-    try {
-      const playerId = String(this.player.id);
-      const editedData = { ...this.editForm.value };
+    if (this.editForm.valid && this.player?.id) {
+      try {
+        const playerId = String(this.player.id);
+        const editedData = { ...this.editForm.value };
 
-      if (this.selectedImage){
-        editedData.fotoUrl = await this.playerService.uploadFileString(this.selectedImage, 'images/');
+        if (this.selectedImage){
+          editedData.fotoUrl = await this.playerService.uploadFileString(this.selectedImage, 'images/');
+        }
+
+        if (this.selectedPoster){
+          editedData.posterUrl = await this.playerService.uploadFileString(this.selectedPoster, 'images/');
+        }
+
+        await this.playerService.updatePlayer(playerId, editedData);
+
+        this.player = {...this.player, ...editedData}
+        this.successMessage = true;
+        this.selectedImage = null;
+        this.selectedPoster = null;
+        this.isEditing = false;
+
+      setTimeout(() => {
+        this.successMessage = false;
+      }, 3000);
+
+      } catch (error) {
+        console.error('Error al guardar el jugador:', error);
       }
-      /*if (this.selectedVideo){
-        editedData.videoUrl = await this.playerService.uploadFile(this.selectedVideo, 'videos/');
-      }*/
-
-      await this.playerService.updatePlayer(playerId, editedData);
-
-      this.player = {...this.player, ...editedData}
-      this.successMessage = true;
-      this.selectedImage = null;
-      //this.selectedVideo = null;
-      this.isEditing = false;
-
-    setTimeout(() => {
-      this.successMessage = false;
-    }, 3000);
-
-    } catch (error) {
-      console.error('Error al guardar el jugador:', error);
     }
   }
-  }
+
+
 }
