@@ -71,13 +71,10 @@ export class DetailComponent implements OnChanges{
   if (this.editForm.valid && this.player?.id) {
     try {
       const playerId = String(this.player.id);
-      const editedData = {...this.editForm.value, posterUrl: this.editForm.value.posterUrl || this.player.posterUrl || '/images/poster.jpg'};
+      const editedData = { ...this.editForm.value };
 
       if (this.selectedImage){
         editedData.fotoUrl = await this.playerService.uploadFileString(this.selectedImage, 'images/');
-      } else if (!editedData.fotoUrl && this.player.fotoUrl) {
-        // Fallback for safety if not set in form
-        editedData.fotoUrl = this.player.fotoUrl;
       }
       /*if (this.selectedVideo){
         editedData.videoUrl = await this.playerService.uploadFile(this.selectedVideo, 'videos/');
