@@ -32,6 +32,8 @@ export class HomePageComponent implements OnInit {
 
         if(jugadorActualizado){
           this.selectedPlayer= {...jugadorActualizado}
+        }else {
+          this.selectedPlayer = null;
         }
       }
 
