@@ -31,6 +31,8 @@ export class AddPlayerComponent {
       experiencia: ['', Validators.required],
       precio: ['', [Validators.required, Validators.min(0)]],
       descripcion: [''],
+      fotoUrl: [''],
+      posterUrl: [''],
       videoUrl: ['']
 
     });
