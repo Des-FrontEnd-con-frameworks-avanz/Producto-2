@@ -77,5 +77,82 @@ export const PLAYERS_DATA: Player[] = [
     videoUrl: 'https://www.dropbox.com/scl/fi/b6zzuynxn8gj4dn2f5rw4/jokic-highlights.mp4?rlkey=0j441o5l65mc1uqxebo32mh4f&st=iggytn64&raw=1',
     posterUrl: 'assets/videos/poster/jokic.webp',
     descripcion: 'El "Joker". Un pívot con alma de base y doble MVP.'
-  }
+  },
+  {
+    id: 6,
+    nombre: 'Joel',
+    apellidos: 'Embiid',
+    posicion: 'Pívot',
+    edad: 32,
+    altura: '2.13 m',
+    peso: '127 kg',
+    experiencia: '10° Temporadas',
+    precio: 51000000,
+    fotoUrl: 'images/embiid.png',
+    videoUrl: 'https://www.dropbox.com/scl/fi/hjbzqw7m8k5xht0bffw7b/Joel-Embiid-s-Top-10-Defensive-Plays-of-the-2017-2018-NBA-Regular-Season.mp4?rlkey=nbwb7j2uwd26uucl7lax4aja4&st=1jo0urfl&dl=1',
+    posterUrl: 'assets/videos/poster/embiid.webp',
+    descripcion: 'Pívot dominante con habilidades ofensivas y defensivas élite.'
+    },
+    {
+      id: 7,
+      nombre: 'Jayson',
+      apellidos: 'Tatum',
+      posicion: 'Alero',
+      edad: 27,
+      altura: '2.03 m',
+      peso: '95 kg',
+      experiencia: '9° Temporadas',
+      precio: 52000000,
+      fotoUrl: 'images/jayson.png',
+      videoUrl: 'https://www.dropbox.com/scl/fi/g7cm33m351o5d9fuggrii/Jayson-Tatum-s-DOMINANT-TRIPLE-DOUBLE-Performance-in-the-CHI-_-December-21-2024.mp4?rlkey=zhvghwmwqusd4a5m3xd49qu3b&st=az8nahfq&dl=1',
+      posterUrl: 'assets/videos/poster/tatum.webp',
+      descripcion: 'Alero estrella con gran capacidad anotadora y liderazgo.'
+      }
+      ,
+      {
+        id: 8,
+        nombre: 'Ja',
+        apellidos: 'Morant',
+        posicion: 'Base',
+        edad: 24,
+        altura: '1.91 m',
+        peso: '79 kg',
+        experiencia: '5° Temporadas',
+        precio: 38000000,
+        fotoUrl: 'images/morant.png',
+        videoUrl: 'https://www.dropbox.com/scl/fi/ma2tdoa2rt41bwyy3lmxp/MUST-SEE_-Ja-Morant-POSTER.mp4?rlkey=lgatgeh4111b2f6ph5t4w61mk&st=av7l82cj&dl=1',
+        posterUrl: 'assets/videos/poster/morant.webp',
+        descripcion: 'Base explosivo y creativo, capaz de dominar cualquier partido.'
+      },
+      {
+        id: 9,
+        nombre: 'Anthony',
+        apellidos: 'Edwards',
+        posicion: 'Escolta',
+        edad: 22,
+        altura: '1.96 m',
+        peso: '100 kg',
+        experiencia: '3° Temporadas',
+        precio: 28000000,
+        fotoUrl: 'images/edwards.png',
+        videoUrl: 'https://www.dropbox.com/scl/fi/j6qp5s8ecb6vd5dzf7i7q/videoplayback.mp4?rlkey=lzob1a960o2wond0qwxlw27ju&st=ap51g74m&dl=1',
+        posterUrl: 'assets/videos/poster/edwards.webp',
+        descripcion: 'Joven estrella con gran capacidad atlética y anotadora.'
+      },
+      {
+        id: 10,
+        nombre: 'Devin',
+        apellidos: 'Booker',
+        posicion: 'Escolta',
+        edad: 26,
+        altura: '1.96 m',
+        peso: '93 kg',
+        experiencia: '8° Temporadas',
+        precio: 43000000,
+        fotoUrl: 'images/booker.png',
+        videoUrl: 'https://www.dropbox.com/scl/fi/qp7vzp02d1o43v2n7lym0/Devin-Booker-Had-A-Historic-Rookie-Season-_-Top-10-Rookie-Plays.mp4?rlkey=gqc21buotqdkcecbe19ianjcw&st=pgm9prdp&dl=1',
+        posterUrl: 'assets/videos/poster/booker.webp',
+        descripcion: 'Escolta letal con capacidad anotadora y gran tiro exterior.'
+    },
+
 ];
